@@ -1,7 +1,10 @@
 from azure.ai.ml.entities import Workspace
 from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 subscription_id = os.getenv("SUBSCRIPTION_ID")  # preferably using env variable
 resource_group = os.getenv("RESOURCE_GROUP")  # preferably using env variable
