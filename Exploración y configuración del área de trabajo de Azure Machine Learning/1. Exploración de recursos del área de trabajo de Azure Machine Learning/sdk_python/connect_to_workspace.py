@@ -9,9 +9,11 @@ load_dotenv()  # take environment variables from .env.
 subscription_id = os.getenv("SUBSCRIPTION_ID")  # preferably using env variable
 resource_group = os.getenv("RESOURCE_GROUP")  # preferably using env variable
 workspace = os.getenv("WORKSPACE")  # preferably using env variable
+
 if workspace is None:
-    ml_client = MLClient(DefaultAzureCredential(),
-                         subscription_id, resource_group)
+    ml_client = MLClient(credential=DefaultAzureCredential(),
+                         subscription_id=subscription_id,
+                         resource_group_name=resource_group)
 else:
     ml_client = MLClient(
         DefaultAzureCredential(), subscription_id, resource_group, workspace
