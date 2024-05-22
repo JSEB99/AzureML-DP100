@@ -2,7 +2,7 @@
 from azure.ai.ml.entities import Workspace
 from connect_to_workspace import ml_client
 
-workspace_name = "mlw-dp100"
+workspace_name = "aml-sdk"
 
 ws_basic = Workspace(
     name=workspace_name,
