@@ -1,3 +1,5 @@
+# Identificación de los recursos de Azure Machine Learning
+
 ## Introducción
 
 Azure Machine Learning proporciona una plataforma para que los científicos de datos entrenen, implementen y administren sus modelos de Machine Learning en la plataforma Microsoft Azure. Azure Machine Learning proporciona un conjunto completo de recursos y activos para entrenar e implementar modelos de Machine Learning eficaces.
