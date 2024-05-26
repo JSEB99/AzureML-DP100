@@ -211,3 +211,128 @@ my_data = Data(
 
 ml_client.data.create_or_update(my_data)
 ```
+
+Al analizar el recurso de datos del archivo URI como entrada en un trabajo de Azure Machine Learning, primero debe leer los datos para poder trabajar con él.
+
+Imagine que crea un script de Python que desea ejecutar como trabajo y establece el valor del parámetro input_data de entrada para que sea el recurso de datos del archivo URI (que apunta a un archivo CSV). Para leer los datos, incluya el código siguiente en el script de Python:
+
+```Python
+import argparse
+import pandas as pd
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--input_data", type=str)
+args = parser.parse_args()
+
+df = pd.read_csv(args.input_data)
+print(df.head(10))
+```
+
+Si el recurso de datos del archivo URI apunta a un tipo diferente de archivo, debe usar el código de Python adecuado para leer los datos. Por ejemplo, si en lugar de usar archivos CSV está trabajando con archivos JSON, usaría `pd.read_json()` en su lugar.
+
+## Creación de un recurso de datos de carpeta URI
+
+Un recurso de datos de carpeta URI apunta a una carpeta específica. Funciona de forma similar a un recurso de datos de archivo URI y admite las mismas rutas de acceso.
+
+Para crear un recurso de datos de carpeta URI con el SDK de Python, puede usar el código siguiente:
+
+```Python
+from azure.ai.ml.entities import Data
+from azure.ai.ml.constants import AssetTypes
+
+my_path = '<supported-path>'
+
+my_data = Data(
+    path=my_path,
+    type=AssetTypes.URI_FOLDER,
+    description="<description>",
+    name="<name>",
+    version='<version>'
+)
+
+ml_client.data.create_or_update(my_data)
+```
+
+Al analizar el recurso de datos de la carpeta URI como entrada en un trabajo de Azure Machine Learning, primero debe leer los datos para poder trabajar con él.
+
+Imagine que crea un script de Python que desea ejecutar como trabajo y establece el valor del parámetro input_data de entrada para que sea el recurso de datos de la carpeta URI (que apunta a varios archivos CSV). Puede leer todos los archivos CSV de la carpeta y concatenarlos; puede hacerlo mediante la inclusión del código siguiente en el script de Python:
+
+```Python
+import argparse
+import glob
+import pandas as pd
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--input_data", type=str)
+args = parser.parse_args()
+
+data_path = args.input_data
+all_files = glob.glob(data_path + "/*.csv")
+df = pd.concat((pd.read_csv(f) for f in all_files), sort=False)
+```
+
+## Creación de un recurso de datos de MLTable
+
+Un recurso de datos de MLTable permite apuntar a datos tabulares. Al crear un recurso de datos de MLTable, se especifica la definición de esquema para leer los datos. Como el esquema ya está definido y almacenado con el recurso de datos, no es necesario especificar cómo leer los datos al usarlo.
+
+> Por lo tanto, quiere usar un recurso de datos MLTable cuando el esquema de los datos sea complejo o cambie con frecuencia. En lugar de cambiar cómo leer los datos en cada script que los usa, solo tiene que cambiarlos en el propio recurso de datos.
+
+Al definir el esquema al crear un recurso de datos de MLTable, también puede optar por especificar solo un subconjunto de los datos.
+
+Para determinadas características de Azure Machine Learning, como el aprendizaje automático automatizado, debe usar un recurso de datos de MLTable, ya que Azure Machine Learning debe saber cómo leer los datos.
+
+Para definir el esquema, puede incluir un archivo MLTable en la misma carpeta que los datos que desea leer. El archivo MLTable incluye la ruta de acceso que apunta a los datos que desea leer y cómo leer los datos:
+
+```yml
+type: mltable
+
+paths:
+  - pattern: ./*.txt
+transformations:
+  - read_delimited:
+      delimiter: ","
+      encoding: ascii
+      header: all_files_same_headers
+```
+
+Usando `SDK Python`
+
+```Python
+from azure.ai.ml.entities import Data
+from azure.ai.ml.constants import AssetTypes
+
+my_path = '<path-including-mltable-file>'
+
+my_data = Data(
+    path=my_path,
+    type=AssetTypes.MLTABLE,
+    description="<description>",
+    name="<name>",
+    version='<version>'
+)
+
+ml_client.data.create_or_update(my_data)
+```
+
+Al analizar un recurso de datos de MLTable como entrada en un script de Python que desea ejecutar como un trabajo de Azure Machine Learning, puede incluir el código siguiente para leer los datos:
+
+```Python
+import argparse
+import mltable
+import pandas
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--input_data", type=str)
+args = parser.parse_args()
+
+tbl = mltable.load(args.input_data)
+df = tbl.to_pandas_dataframe()
+
+print(df.head(10))
+```
+
+Un enfoque común consiste en convertir los datos tabulares en una trama de datos de Pandas. Sin embargo, también puede convertir los datos en una trama de datos de Spark si se adapta mejor a la carga de trabajo.
+
+## [EJERCICIO](https://microsoftlearning.github.io/mslearn-azure-ml/Instructions/03-Make-data-available.html)
+
+## [NOTEBOOK EXAMPLE](https://github.com/MicrosoftLearning/mslearn-azure-ml/blob/main/Labs/03/Work%20with%20data.ipynb)

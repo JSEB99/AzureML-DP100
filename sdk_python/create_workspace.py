@@ -2,7 +2,7 @@
 from azure.ai.ml.entities import Workspace
 from connect_to_workspace import ml_client
 
-workspace_name = "aml-sdk"
+workspace_name = "riskanalyzers-mlw"
 
 ws_basic = Workspace(
     name=workspace_name,
