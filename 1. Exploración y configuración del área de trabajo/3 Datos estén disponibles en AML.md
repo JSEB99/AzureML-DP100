@@ -12,7 +12,7 @@ _Puede almacenar datos en el dispositivo local o en algún lugar de la nube_. Do
 
 Un URI hace referencia a la ubicación de los datos. Para que Azure Machine Learning se conecte a los datos, debe anexar al URI un prefijo con el protocolo adecuado. _Hay tres protocolos comunes al trabajar con datos en el contexto de Azure Machine Learning:_
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 - `http(s):` se usa para almacenes de datos pública o privadamente en una ubicación http(s) de Azure Blob Storage o disponible públicamente.
 - `abfs(s):` se usa para almacenes de datos en una instancia de Azure Data Lake Storage Gen 2.
@@ -22,7 +22,7 @@ _Ejemplo:_
 
 Puede crear una instancia de _Azure Blob Storage en Azure_. Para almacenar datos, crea un `contenedor denominado training-data`. Dentro del contenedor, crea una `carpeta datastore-path`. Dentro de la carpeta, almacena el archivo `CSV diabetes.csv`.
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 Cuando quiera acceder a los datos desde el área de trabajo de Azure Machine Learning, puede usar la ruta de acceso a la carpeta o el archivo directamente. Cuando quiera conectarse directamente a la carpeta o al archivo, puede usar el protocolo `http(s)`. _Si el contenedor está establecido en privado, deberá proporcionar algún tipo de autenticación para obtener acceso a los datos, como una firma de acceso compartido (SAS)._
 
@@ -44,7 +44,7 @@ Las ventajas de usar almacén de datos son las siguientes:
 
 Al crear un almacén de datos con una cuenta de almacenamiento existente en Azure, puede elegir entre dos métodos de autenticación diferentes:
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 - **Basado en credenciales**: use una entidad de servicio, un token de firma de acceso compartido (SAS) o una clave de cuenta para autenticar el acceso a la cuenta de almacenamiento.
 - **Basado en la identidad**: Use la identidad de Microsoft Entra o la identidad administrada.
@@ -166,7 +166,7 @@ Las ventajas de usar recursos de datos son las siguientes:
 
 Hay tres tipos principales de recursos de datos que puede usar:
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 - **Archivo URI**: apunta a un archivo específico.
 - **Carpeta URI**: apunta a una carpeta.

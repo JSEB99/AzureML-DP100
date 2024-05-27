@@ -286,14 +286,14 @@ Experimentar manualmente con diferentes configuraciones para entrenar un modelo 
 
 Esta funcionalidad recorre en iteración los algoritmos emparejados con selecciones de características a fin de encontrar el modelo que tiene el mejor rendimiento para los datos.
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 ### Ejecutar un cuaderno
 
 Cuando prefiera desarrollar mediante la ejecución de código en cuadernos, puede usar la característica de cuaderno integrada en el área de trabajo.
 
 La página Cuadernos del Estudio le permite editar y ejecutar cuadernos de Jupyter Notebook.
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 Todos los archivos que clona o crea en la sección Cuadernos se almacenan en el recurso compartido de archivos de la cuenta de Azure Storage que se creó con el área de trabajo.
 
@@ -307,7 +307,7 @@ Cuando quiera preparar el código para que esté listo para producción, es mejo
 
 Puede ejecutar un script como un trabajo en Azure Machine Learning. Al enviar un trabajo al área de trabajo, todas las entradas y salidas se almacenarán en el área de trabajo.
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 **Existen diferentes tipos de trabajos en función de cómo quiere ejecutar una carga de trabajo:**
 
