@@ -7,7 +7,7 @@ from sklearn.externals import joblib
 
 def main(args):
     # Cargar datos de entrenamiento
-    data = pd.read_csv(args.train_data)
+    data = pd.read_csv(f"{args.input_dir}/train.csv")
 
     # Dividir en características (X) y etiqueta (y)
     X = data.drop(columns=['default.payment.next.month'])
@@ -18,7 +18,7 @@ def main(args):
     model.fit(X, y)
 
     # Cargar datos de prueba
-    test = pd.read_csv(args.test_data)
+    test = pd.read_csv(f"{args.input_dir}/test.csv")
     X_test = test.drop(columns=['default.payment.next.month'])
     y_test = test['default.payment.next.month']
 
@@ -40,10 +40,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_data', type=str,
-                        help='Ruta al archivo de datos de entrenamiento')
-    parser.add_argument('--test_data', type=str,
-                        help='Ruta al archivo de datos de prueba')
+    parser.add_argument('--input_dir', type=str,
+                        help='Ruta al archivo de datos')
     parser.add_argument('--output_dir', type=str,
                         help='Directorio de salida para el modelo y predicciones')
     args = parser.parse_args()
