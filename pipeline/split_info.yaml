@@ -13,5 +13,5 @@ code: .
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 command: >-
   python split_info.py
-  --input_data inputs.input_data
+  --input_data ${{inputs.input_data}}
   --output_path ${{outputs.output_path}}

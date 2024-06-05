@@ -1,13 +1,37 @@
 import os
+import glob
 import argparse
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.externals import joblib
+import joblib
+from pathlib import Path
 
 
 def main(args):
     # Cargar datos de entrenamiento
-    data = pd.read_csv(f"{args.input_dir}/train.csv")
+    # Utiliza glob para encontrar los archivos train.csv y test.csv en el directorio de entrada
+    print(f"Directorio de entrada: {args.input_dir}")
+
+    train_files = glob.glob(os.path.join(args.input_dir, "train.csv"))
+    test_files = glob.glob(os.path.join(args.input_dir, "test.csv"))
+
+    # Lee los archivos train.csv y test.csv si existen
+    if train_files:
+        data = pd.read_csv(train_files[0])
+    else:
+        raise FileNotFoundError(
+            "No se encontró el archivo train.csv en el directorio de entrada.")
+
+    if test_files:
+        test = pd.read_csv(test_files[0])
+    else:
+        raise FileNotFoundError(
+            "No se encontró el archivo test.csv en el directorio de entrada.")
+    print(len(data), len(test))
+    print(data.columns)
+    print(data.head(2))
+    print(test.columns)
+    print(test.head(2))
 
     # Dividir en características (X) y etiqueta (y)
     X = data.drop(columns=['default.payment.next.month'])
@@ -17,25 +41,20 @@ def main(args):
     model = LogisticRegression(max_iter=1000)
     model.fit(X, y)
 
-    # Cargar datos de prueba
-    test = pd.read_csv(f"{args.input_dir}/test.csv")
     X_test = test.drop(columns=['default.payment.next.month'])
-    y_test = test['default.payment.next.month']
 
     # Predecir los valores del conjunto de prueba
     y_pred = model.predict(X_test)
-
-    # Crear el directorio de salida si no existe
-    os.makedirs(args.output_dir, exist_ok=True)
+    predictions_df = pd.DataFrame(y_pred, columns=['predicciones'])
 
     # Guardar el modelo entrenado
-    joblib_file = os.path.join(args.output_dir, "credit_model_logisticR.pkl")
+    joblib_file = os.path.join(
+        Path(args.output_dir)/"credit_model_logisticR.pkl")
     joblib.dump(model, joblib_file)
 
     # Guardar las predicciones
-    predictions_file = os.path.join(args.output_dir, 'logistic_preds.csv')
-    pd.DataFrame(y_pred, columns=['Predictions']).to_csv(
-        predictions_file, index=False)
+    predictions = predictions_df.to_csv(
+        (Path(args.output_dir)/"predictions.csv"), index=False)
 
 
 if __name__ == '__main__':

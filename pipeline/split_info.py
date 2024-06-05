@@ -16,19 +16,8 @@ def main(args):
     # Dividir datos en entrenamiento y prueba
     train, test = train_test_split(data, test_size=0.2, random_state=42)
 
-    # Crear directorios de salida si no existen
-    # os.makedirs(args.output_train, exist_ok=True)
-    # os.makedirs(args.output_test, exist_ok=True)
-
-    # Crear un directorio temporal dentro del directorio de salida de entrenamiento
-    # temp_dir = tempfile.mkdtemp(dir=args.output_dir)
-
-    # Guardar los conjuntos de datos en el directorio temporal
-    # train.to_csv(os.path.join(temp_dir, 'train.csv'), index=False)
-    # test.to_csv(os.path.join(temp_dir, 'test.csv'), index=False)
-    # Guardar los conjuntos de datos en Azure Blob Storage
-    train_df = train.to_csv((Path(args.output_data)/"train.csv"), index=False)
-    test_df = test.to_csv((Path(args.output_data)/"test.csv"), index=False)
+    train_df = train.to_csv((Path(args.output_path)/"train.csv"), index=False)
+    test_df = test.to_csv((Path(args.output_path)/"test.csv"), index=False)
 
     # Registrar métricas
     run.log("Train Dataset Size", len(train))
