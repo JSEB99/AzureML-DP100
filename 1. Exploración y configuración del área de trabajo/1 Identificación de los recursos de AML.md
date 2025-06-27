@@ -23,7 +23,7 @@ Para crear un servicio Azure Machine Learning Service, tendrá que:
 7. Application Insights: para supervisar los servicios predictivos en el área de trabajo
 8. Azure Container Registry: se crea cuando es necesario para almacenar imágenes para entornos de Azure Machine Learning
 
-![steps](image.png)
+![steps](./images/image.png)
 
 ### Creación del área de trabajo
 
